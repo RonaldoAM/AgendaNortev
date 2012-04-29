@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
@@ -346,7 +346,7 @@ public class ContatoGUI extends javax.swing.JFrame {
             num = Integer.parseInt(campoDDD.getText());
         }catch(NumberFormatException e){}
          try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
             
             if (atual == null) {
                 if (campoNome.getText().equals("")) {
@@ -388,7 +388,7 @@ public class ContatoGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
             try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
             d.delete(atual);
             p.modeloContatos.limpar();
             p.modeloContatos.addListaDeContato(d.getAllCon());

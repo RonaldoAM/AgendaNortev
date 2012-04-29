@@ -2,7 +2,7 @@
 
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import javax.swing.JOptionPane;
 import logica.SerialSenha;
 
@@ -164,7 +164,7 @@ public class SerialGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
             if (atual == null) {
 
                 if (campoUser.getText().equals("") || campoPass.getText().equals("")) {
@@ -199,7 +199,7 @@ public class SerialGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
          try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
             d.delete(atual);
               p.modeloSerial.limpar();
             p.modeloSerial.addListaDeSerialSenha(d.getAllSen());

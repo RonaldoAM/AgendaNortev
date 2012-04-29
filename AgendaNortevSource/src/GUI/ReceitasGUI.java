@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import javax.swing.JOptionPane;
 import logica.Receita;
 
@@ -181,7 +181,7 @@ public class ReceitasGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
          try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
             if (atual == null) {
                  if (campoNome.getText().equals("") || campoIngri.getText().equals("") || campoModo.getText().equals("")) {
                     JOptionPane.showMessageDialog(this, "Por favor preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -217,7 +217,7 @@ public class ReceitasGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
         try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
             d.delete(atual);
             p.modeloReceita.limpar();
             p.modeloReceita.addListaDeReceita(d.getAllRec());

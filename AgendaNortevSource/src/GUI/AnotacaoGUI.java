@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import javax.swing.JOptionPane;
 import logica.Anotacao;
 
@@ -146,7 +146,7 @@ public class AnotacaoGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
             if (atual == null) {
                 if (campoConteudo.getText().equals("") || campoTitulo.getText().equals("")) {
                     JOptionPane.showMessageDialog(this, "Por favor preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -176,7 +176,7 @@ public class AnotacaoGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
          try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
             d.delete(atual);
             p.modeloAnotacoes.limpar();
             p.modeloAnotacoes.addListaDeAnotacao(d.getAllAnot());

@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAO;
+import Persistencia.JDBC.DAO;
 import javax.swing.JOptionPane;
 import logica.DadosPessoais;
 

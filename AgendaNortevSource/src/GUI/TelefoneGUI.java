@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import javax.swing.JOptionPane;
 import logica.Uteis;
 
@@ -148,7 +148,7 @@ public class TelefoneGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
             if (atual == null) {
                 if (campoDescricao.getText().equals("") || campoTelefone.getText().equals("")) {
                     JOptionPane.showMessageDialog(this, "Por favor preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -180,7 +180,7 @@ public class TelefoneGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
          try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
             d.delete(atual);
             p.modeloTelefone.limpar();
             p.modeloTelefone.addListaDeUteis(d.getAllUti());

@@ -1,7 +1,7 @@
 package logica;
 
 import GUI.*;
-import Persistencia.DAO;
+import Persistencia.JDBC.DAO;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

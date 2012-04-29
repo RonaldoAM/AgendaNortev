@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -258,7 +258,7 @@ public class CompromissoGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
 
             if (atual == null) {
 
@@ -329,7 +329,7 @@ public class CompromissoGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
            try {
-            Persistencia.DAO d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
             d.delete(atual);
             p.modeloComprimissos.limpar();
             p.modeloComprimissos.addListaDeCompromisso(d.getAllComp());

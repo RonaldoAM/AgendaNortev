@@ -1,6 +1,6 @@
 package GUI;
 
-import Persistencia.DAOFactory;
+import Persistencia.JDBC.DAOFactory;
 import java.awt.Image;
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -1097,7 +1097,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        Persistencia.DAO d2 = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.DADOS);
+        Persistencia.JDBC.DAO d2 = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.DADOS);
 
         DadosPessoaisGUI dpg = new DadosPessoaisGUI(d2);
         dpg.setAlwaysOnTop(true);
@@ -1325,8 +1325,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void verificarDados() {
         try {
-            Persistencia.DAO d2 = null;
-            d2 = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.DADOS);
+            Persistencia.JDBC.DAO d2 = null;
+            d2 = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.DADOS);
             dados = d2.getDado();
 
 
@@ -1405,8 +1405,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void carregarDadosBanco() {
-        Persistencia.DAO d = null;
-        Persistencia.DAO dComp = null;
+        Persistencia.JDBC.DAO d = null;
+        Persistencia.JDBC.DAO dComp = null;
 
         modeloAnotacoes = new AnotacoesModel();
         modeloComprimissos = new CompromissosModel();
@@ -1425,23 +1425,23 @@ public class Principal extends javax.swing.JFrame {
 
         try {
 
-            d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
             pegueiAnot = d.getAllAnot();
 
-            dComp = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+            dComp = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
             pegueiCom = dComp.getAllComp();
 
 
-            d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
+            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
             pegueiCon = d.getAllCon();
 
-            d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
+            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.RECEITA);
             pegueiRec = d.getAllRec();
 
-            d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
+            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.SENHA);
             pegueiSer = d.getAllSen();
 
-            d = Persistencia.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
+            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
             pegueiUte = d.getAllUti();
 
         } catch (Exception e) {
