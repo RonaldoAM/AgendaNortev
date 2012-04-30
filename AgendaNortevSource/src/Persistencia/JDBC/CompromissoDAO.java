@@ -70,7 +70,7 @@ public class CompromissoDAO extends DAO{
     
     @Override
     public void salvar(Compromisso a) throws SQLException{       
-        save.setDate(1, a.getData());
+        save.setDate(1, new java.sql.Date(a.getData().getTime()));
         save.setString(2, a.getHora());        
         save.setString(3, a.getLocal());
         save.setString(4, a.getDetalhes());
@@ -82,7 +82,7 @@ public class CompromissoDAO extends DAO{
     
     @Override
     public void update(Compromisso a) throws SQLException{
-        update.setDate(1, a.getData());
+        update.setDate(1, new java.sql.Date(a.getData().getTime()));
         update.setString(2, a.getHora());
         update.setString(3, a.getLocal());
         update.setString(4, a.getDetalhes());

@@ -1,5 +1,7 @@
 package GUI;
 
+import Persistencia.Hibernate.AnotacaoDAO;
+import Persistencia.Hibernate.HibernateUtil;
 import Persistencia.JDBC.DAOFactory;
 import javax.swing.JOptionPane;
 import logica.Anotacao;
@@ -146,7 +148,10 @@ public class AnotacaoGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+//            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+            
+            AnotacaoDAO d = new AnotacaoDAO();
+            
             if (atual == null) {
                 if (campoConteudo.getText().equals("") || campoTitulo.getText().equals("")) {
                     JOptionPane.showMessageDialog(this, "Por favor preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -159,27 +164,29 @@ public class AnotacaoGUI extends javax.swing.JFrame {
                 } else {
                     atual.setConteudo(campoConteudo.getText());
                     atual.setTitulo(campoTitulo.getText());
-                    d.update(atual);
+                    d.atualizar(atual);
                 }
             }
             p.modeloAnotacoes.limpar();
-            p.modeloAnotacoes.addListaDeAnotacao(d.getAllAnot());
+            p.modeloAnotacoes.addListaDeAnotacao(d.listar());
             p.modeloAnotacoes.filtrar("");
             JOptionPane.showMessageDialog(this, "Anotação salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro: " + e, "Erro!", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
          try {
-            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
-            d.delete(atual);
+           // Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+           AnotacaoDAO d = new AnotacaoDAO();
+             d.excluir(atual);
             p.modeloAnotacoes.limpar();
-            p.modeloAnotacoes.addListaDeAnotacao(d.getAllAnot());
+            p.modeloAnotacoes.addListaDeAnotacao(d.listar());
             p.modeloAnotacoes.filtrar("");
             JOptionPane.showMessageDialog(this, "Anotação excluida com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();

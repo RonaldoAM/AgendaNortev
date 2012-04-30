@@ -1,12 +1,18 @@
-
-
 package logica;
 
+import javax.persistence.*;
 
+@Entity
+@Table (name = "Receita")
 public class Receita {
-private int id;
+    @Id
+    @GeneratedValue( strategy= GenerationType.AUTO )
+    private int id;
     private String nomeDaReceita,ModoDePreparo,categoria;
     private String ingredientes;
+
+    public Receita() {
+    }
 
     public Receita(String nomeDaReceita, String ModoDePreparo,String ing,String categoria) {
         this.nomeDaReceita = nomeDaReceita;

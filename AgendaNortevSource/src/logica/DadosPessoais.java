@@ -1,8 +1,13 @@
 
 package logica;
 
+import javax.persistence.*;
 
+@Entity
+@Table (name = "DadosPessoais")
 public class DadosPessoais {
+    @Id
+    @GeneratedValue ( strategy= GenerationType.AUTO )
     private int id;
     private String nome;
     private String email;

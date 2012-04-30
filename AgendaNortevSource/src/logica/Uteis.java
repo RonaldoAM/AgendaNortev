@@ -1,8 +1,20 @@
 package logica;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "Uteis")
 public class Uteis {
-private int id;
-    private String descricao,tel;
+
+    @Id
+    @GeneratedValue ( strategy= GenerationType.AUTO )
+    private int id;
+    private String descricao;
+    private String tel;
+
+    public Uteis() {
+    }
+   
 
     public Uteis(String descricao, String tel) {
         this.descricao = descricao;
@@ -32,5 +44,4 @@ private int id;
     public void setTel(String tel) {
         this.tel = tel;
     }
-
 }

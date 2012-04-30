@@ -1,5 +1,7 @@
 package GUI;
 
+import Persistencia.Hibernate.AnotacaoDAO;
+import Persistencia.Hibernate.CompromissoDAO;
 import Persistencia.JDBC.DAOFactory;
 import java.awt.Image;
 import java.awt.Menu;
@@ -68,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
 
         arrumarConfigs();
 
-        verificarDados();
+//        verificarDados();
 
         carregarDadosBanco();
 
@@ -1405,8 +1407,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void carregarDadosBanco() {
-        Persistencia.JDBC.DAO d = null;
-        Persistencia.JDBC.DAO dComp = null;
+    //    Persistencia.JDBC.DAO d = null;
+    //    Persistencia.JDBC.DAO dComp = null;
 
         modeloAnotacoes = new AnotacoesModel();
         modeloComprimissos = new CompromissosModel();
@@ -1424,12 +1426,20 @@ public class Principal extends javax.swing.JFrame {
         ArrayList<Receita> pegueiRec = null;
 
         try {
+            
+            AnotacaoDAO anotDAO = new AnotacaoDAO();
+            pegueiAnot = (ArrayList<Anotacao>) anotDAO.listar();
 
-            d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
-            pegueiAnot = d.getAllAnot();
+            CompromissoDAO compDAO = new CompromissoDAO();
+            pegueiCom = (ArrayList<Compromisso>) compDAO.listar();
+            
+            /* ANTIGO - USANDO JDBC
 
-            dComp = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
-            pegueiCom = dComp.getAllComp();
+          d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.ANOTACAO);
+          pegueiAnot = d.getAllAnot();
+
+           dComp = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+           pegueiCom = dComp.getAllComp();
 
 
             d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.CONTATO);
@@ -1443,6 +1453,8 @@ public class Principal extends javax.swing.JFrame {
 
             d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.UTEIS);
             pegueiUte = d.getAllUti();
+            * 
+            */
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro: na criacao do D " + e, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -1481,6 +1493,6 @@ public class Principal extends javax.swing.JFrame {
         tabelaTelefone.setModel(modeloTelefone);
         tabelaReceitas.setModel(modeloReceita);
         
-        t = new ThreadCompromisso(dComp);
+        t = new ThreadCompromisso(new CompromissoDAO());
     }
 }

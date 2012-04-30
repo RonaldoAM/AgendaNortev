@@ -1,5 +1,6 @@
 package GUI;
 
+import Persistencia.Hibernate.CompromissoDAO;
 import Persistencia.JDBC.DAOFactory;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -258,8 +259,9 @@ public class CompromissoGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
-            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
-
+            //Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+            CompromissoDAO d = new CompromissoDAO();
+            
             if (atual == null) {
 
                 try {
@@ -272,7 +274,7 @@ public class CompromissoGUI extends javax.swing.JFrame {
                         Compromisso add = new Compromisso(new java.sql.Date(campoData.getDate().getTime()), campoHora.getText(), campoLocal.getText(), campoDetalhes.getText(), notificar.isSelected());
                         d.salvar(add);
                         p.modeloComprimissos.limpar();
-                        p.modeloComprimissos.addListaDeCompromisso(d.getAllComp());
+                        p.modeloComprimissos.addListaDeCompromisso(d.listar());
                         p.modeloComprimissos.filtrarData("");
                         
                         t.addCom(p.modeloComprimissos.getCompromisso(p.modeloComprimissos.getRowCount()-1));
@@ -297,9 +299,9 @@ public class CompromissoGUI extends javax.swing.JFrame {
                         atual.setLocal(campoLocal.getText());
                         atual.setNotificacao(notificar.isSelected());
 
-                        d.update(atual);
+                        d.atualizar(atual);
                         p.modeloComprimissos.limpar();
-                        p.modeloComprimissos.addListaDeCompromisso(d.getAllComp());
+                        p.modeloComprimissos.addListaDeCompromisso(d.listar());
                         p.modeloComprimissos.filtrarData("");
                         t.addCom(atual);
                         JOptionPane.showMessageDialog(this, "Compromisso salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -329,10 +331,11 @@ public class CompromissoGUI extends javax.swing.JFrame {
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         // TODO add your handling code here:
            try {
-            Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
-            d.delete(atual);
+           // Persistencia.JDBC.DAO d = Persistencia.JDBC.DAOFactory.getInstance().getDAO(DAOFactory.COMPROMISSO);
+            CompromissoDAO d = new CompromissoDAO();
+               d.excluir(atual);
             p.modeloComprimissos.limpar();
-            p.modeloComprimissos.addListaDeCompromisso(d.getAllComp());
+            p.modeloComprimissos.addListaDeCompromisso(d.listar());
             p.modeloComprimissos.filtrarData("");
             t.remCom(atual);
             JOptionPane.showMessageDialog(this, "Compromisso excluido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

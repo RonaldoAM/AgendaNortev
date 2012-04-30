@@ -1,6 +1,7 @@
 package logica;
 
 import GUI.*;
+import Persistencia.Hibernate.CompromissoDAO;
 import Persistencia.JDBC.DAO;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 public class ThreadCompromisso implements Runnable {
 
     ArrayList<Compromisso> comNotificacao = null;
-    DAO d;
+    CompromissoDAO d;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat sdfBR = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -37,13 +38,14 @@ public class ThreadCompromisso implements Runnable {
         comNotificacao.remove(c);
     }
 
-    public ThreadCompromisso(DAO d) {
+    public ThreadCompromisso(CompromissoDAO d) {
         this.d = d;
     }
 
     public void run() {
         try{
-            comNotificacao = d.getCompNot();
+            //criar método no CompromissoDAO que execute a antiga query de getCompNot() da classe JDBC
+            comNotificacao = (ArrayList<Compromisso>) d.listarNotificacoes();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -77,7 +79,7 @@ public class ThreadCompromisso implements Runnable {
             vespera.add(Calendar.DATE, -1);
 
             java.sql.Date dataVespera = new java.sql.Date(vespera.getTime().getTime());
-            java.sql.Date dataComp = not.getData();
+            java.util.Date dataComp = not.getData();
 
             String stringVespera = sdf.format(dataVespera);
             String stringComp = sdf.format(dataComp);
@@ -94,8 +96,8 @@ public class ThreadCompromisso implements Runnable {
                     naoHoje = false;
                     
                     try {
-                        d.update(not);
-                    } catch (SQLException e) {
+                        d.atualizar(not);
+                    } catch (Exception e) {
                         System.out.println("erro na thread");
                         e.printStackTrace();
                     }
@@ -108,8 +110,8 @@ public class ThreadCompromisso implements Runnable {
                         enviarEmail(Principal.dados.getEmail(),"Notificacao de compromisso possivelmente atrasado! -Equipe Nortev Solutions","Caro(a) "+Principal.dados.getNome()+",\nNo  dia: "+sdfBR.format(dataComp)+", voce tem/tinha um compromisso.\n\nLocal: "+not.getLocal()+"\nHora: "+not.getHora()+"\nAssunto: "+not.getDetalhes());                        
                         not.setFuiNotificadoVespera(true);
                         try {
-                            d.update(not);
-                        } catch (SQLException e) {
+                            d.atualizar(not);
+                        } catch (Exception e) {
                             System.out.println("erro na thread");
                             e.printStackTrace();
                         }
@@ -126,8 +128,8 @@ public class ThreadCompromisso implements Runnable {
                     not.setFuiNotificadoDia(true);
                     naoHoje = false;
                     try {
-                        d.update(not);
-                    } catch (SQLException e) {
+                        d.atualizar(not);
+                    } catch (Exception e) {
                         System.out.println("erro na thread");
                         e.printStackTrace();
                     }
@@ -141,8 +143,8 @@ public class ThreadCompromisso implements Runnable {
                        enviarEmail(Principal.dados.getEmail(),"Voce perdeu um compromisso... -Equipe Nortev Solutions","Caro(a) "+Principal.dados.getNome()+",\nNo  dia: "+sdfBR.format(dataComp)+", voce tinha um compromisso.\n\nLocal: "+not.getLocal()+"\nHora: "+not.getHora()+"\nAssunto: "+not.getDetalhes());                        
                         not.setFuiNotificadoDia(true);
                         try {
-                            d.update(not);
-                        } catch (SQLException e) {
+                            d.atualizar(not);
+                        } catch (Exception e) {
                             System.out.println("erro na thread");
                             e.printStackTrace();
                         }

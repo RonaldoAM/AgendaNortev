@@ -42,7 +42,9 @@ public class Dao<E> implements Serializable {
 			return criteria.list();
 		}catch(Exception e){
 			throw erroGenerico(nomeClasse, "listar()",e);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public List<E> listar(String campoOrdenacao) throws Exception{
@@ -55,7 +57,9 @@ public class Dao<E> implements Serializable {
 			return criteria.list();
 		}catch(Exception e){
 			throw erroGenerico(nomeClasse, "listar(CampoOrdenacao)", e);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public List<E> listar(String campoOrdenacao, String ordemPesquisa, String campoBD, String pesquisa)throws Exception {
@@ -78,7 +82,9 @@ public class Dao<E> implements Serializable {
 			return criteria.list();
 		}catch(Exception e){
 			throw erroGenerico(nomeClasse, "listar(CampoOrdenacao, OrdemPesquisa, CampoBD, Pesquisa)", e);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 		
 	public Boolean salvar(E object) throws Exception {
@@ -94,7 +100,9 @@ public class Dao<E> implements Serializable {
 		} catch (Exception exe) {
 			HibernateUtil.rollbackTransaction();
 			throw erroGenerico(nomeClasse, "salvar("+nomeClasse+")", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 		
 	public Boolean atualizar(E object) throws Exception {
@@ -107,7 +115,9 @@ public class Dao<E> implements Serializable {
 		} catch (Exception exe) {
 			HibernateUtil.rollbackTransaction();
 			throw erroGenerico(nomeClasse, "atualizar("+nomeClasse+")", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public Boolean excluir(E object) throws Exception {
@@ -120,7 +130,9 @@ public class Dao<E> implements Serializable {
 		} catch (Exception exe) {
 			HibernateUtil.rollbackTransaction();
 			throw erroGenerico(nomeClasse, "excluir("+nomeClasse+")", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 
 	public Boolean excluirID(Integer codigo)throws Exception{
@@ -128,7 +140,9 @@ public class Dao<E> implements Serializable {
 			return excluir(pesquisarID(codigo));
 		}catch(Exception exe){
 			throw erroGenerico(nomeClasse, "excluirID(Inteiro)", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	
@@ -137,7 +151,9 @@ public class Dao<E> implements Serializable {
 			return (E) HibernateUtil.getSession().get(clazz, id);
 		}catch(Exception exe){
 			throw erroGenerico(nomeClasse, "pesquisarID(Inteiro)", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public E pesquisarID(String id) throws Exception {		
@@ -145,7 +161,9 @@ public class Dao<E> implements Serializable {
 			return (E) HibernateUtil.getSession().get(clazz, Integer.parseInt(id));
 		}catch(Exception exe){
 			throw erroGenerico(nomeClasse, "pesquisarID(Inteiro)", exe);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public E pesquisarCampo(String campoBD, String pesquisa) throws Exception{		
@@ -155,7 +173,9 @@ public class Dao<E> implements Serializable {
 			return (E) session.createCriteria(clazz).add(Restrictions.eq(campoBD, pesquisa)).uniqueResult();
 		}catch(Exception e){
 			throw erroGenerico(nomeClasse, "pesquisarCampo(CampoBD, Pesquisa)", e);
-		}
+		}finally{
+                    HibernateUtil.closeSession();
+                }
 	}
 	
 	public E pesquisarCampo(String campoBD, String pesquisa, String campoBD2, String pesquisa2) throws Exception{
@@ -167,7 +187,9 @@ public class Dao<E> implements Serializable {
 													  .uniqueResult();
 		}catch (Exception e) {
 			throw erroGenerico(nomeClasse, "pesquisarCampo(CampoBD, Pesquisa, CampoBD, Pesquisa)", e);
-		}		
+		}finally{
+                    HibernateUtil.closeSession();
+                }		
 	}
 	
 	
@@ -181,14 +203,18 @@ public class Dao<E> implements Serializable {
 		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(clazz);
 		criteria.add(criterion);
-		return (E) criteria.uniqueResult();
+                HibernateUtil.closeSession();
+                
+                return (E) criteria.uniqueResult();
 	}
 	
 	// TODO: Verificar a necessidade - sen�o excluir
 	public List<E> pesquisar(String campo, String argumento) throws Exception {
 		Criteria criteria = HibernateUtil.getSession().createCriteria(clazz);
 		criteria.add(Expression.ilike(campo, argumento, MatchMode.ANYWHERE));
-		return criteria.list();
+                    HibernateUtil.closeSession();
+             
+                return criteria.list();
 	}
 
 	// Classe generica de erros

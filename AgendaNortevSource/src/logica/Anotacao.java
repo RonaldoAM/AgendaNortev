@@ -1,9 +1,21 @@
 package logica;
 
-public class Anotacao {
+import javax.persistence.*;
 
+@Entity
+@Table ( name = "Anotacao" )
+public class Anotacao {
+    
+       
+        
+    @Id
+    @GeneratedValue ( strategy = GenerationType.AUTO )
     private int id;
-    private String titulo,conteudo;
+    private String titulo;
+    private String conteudo;
+
+    public Anotacao() {
+    }
 
     public int getId() {
         return id;

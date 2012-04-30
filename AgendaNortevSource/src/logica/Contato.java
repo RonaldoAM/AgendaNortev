@@ -1,11 +1,28 @@
 package logica;
 
+import javax.persistence.*;
+
+@Entity
+@Table ( name = "contato" )
 public class Contato {
+    
+    @Id
+    @GeneratedValue ( strategy= GenerationType.AUTO )
     private int id;
+    
     private String nome;
     private int DDD;
-    private String tel,cel,msn,skype,estado,cidade,bairro,endereco,site;
-    private String informacoesAdd,email;
+    private String tel;
+    private String cel;
+    private String msn;
+    private String skype;
+    private String estado;
+    private String cidade;
+    private String bairro;
+    private String endereco;
+    private String site;
+    private String informacoesAdd;
+    private String email;
 
     public String getEmail() {
         return email;

@@ -1,8 +1,23 @@
 package logica;
 
+import javax.persistence.*;
+
+@Entity
+@Table ( name = "Senha")
 public class SerialSenha {
+    @Id
+    @GeneratedValue( strategy= GenerationType.AUTO )
     private int id;
-    private String usuarioSoft,senhaSerial,comentario;
+    
+    @Column (name = "usuario")
+    private String usuarioSoft;
+    @Column (name = "senha")
+    private String senhaSerial;
+    
+    private String comentario;
+
+    public SerialSenha() {
+    }
 
     public SerialSenha(String usuarioSoft, String senhaSerial, String comentario) {
         this.usuarioSoft = usuarioSoft;

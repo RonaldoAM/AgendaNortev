@@ -1,16 +1,30 @@
 package logica;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 
-
-public class Compromisso {
+@Entity
+@Table ( name="Compromisso" )
+public class Compromisso implements Serializable {
+    
+    
+    @Id
+    @GeneratedValue ( strategy=GenerationType.AUTO )
     private int id;
+    
+    @Temporal ( TemporalType.DATE )
     private Date data;
+    
     private String hora;
-    private String local,detalhes;
+    private String local;
+    private String detalhes;
     private boolean notificacao;
     private boolean fuiNotificadoVespera;
     private boolean fuiNotificadoDia;
+
+    public Compromisso() {
+    }
 
 
     public Compromisso(Date data, String hora, String local, String detalhes, boolean not) {
